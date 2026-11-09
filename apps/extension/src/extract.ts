@@ -30,7 +30,7 @@ function visibleText(root:Element):string {
     const visible=!excluded&&css?.display!=='none'&&css?.visibility!=='hidden'&&(element===root||!element.parentElement||shown(element.parentElement));
     cache.set(element,visible);return visible;
   }
-  const walker=doc.createTreeWalker(root,128);const parts:string[]=[];let node:Node|null;let length=0,count=0;
+  const walker=doc.createTreeWalker(root,4);const parts:string[]=[];let node:Node|null;let length=0,count=0;
   while((node=walker.nextNode())&&count++<5000&&length<20000){if(node.parentElement&&shown(node.parentElement)){const value=(node.textContent||'').replace(/\s+/g,' ').trim();if(value){parts.push(value);length+=value.length+1;}}}
   return parts.join(' ').slice(0,20000);
 }
