@@ -10,6 +10,7 @@ export const CriterionSchema = z.object({
   id: z.string().min(1).max(40),
   label: z.string().min(1).max(70),
   description: z.string().max(180),
+  priority: z.enum(['mandatory', 'optional']),
   kind: z.enum(['boolean', 'numeric', 'text', 'budget']),
   comparison: z.enum(['at_most', 'at_least', 'equals', 'includes']),
   target: z.string().min(1).max(80),
@@ -59,6 +60,7 @@ export type AnalysisReply = z.infer<typeof AnalysisReplySchema>;
 export const AnalysisRecordSchema = z.object({
   id: z.string(), session: ShoppingSessionSchema, criteriaKey: z.string(), product: ProductSnapshotSchema,
   findings: z.array(CriterionFindingSchema).min(1).max(MAX_CRITERIA), score: z.number().min(0).max(100), checkedAt: z.number(),
+  scoringMethod: z.enum(['equal-v1', 'priority-v2']).default('equal-v1'),
 });
 export type AnalysisRecord = z.infer<typeof AnalysisRecordSchema>;
 
@@ -75,8 +77,9 @@ export type ExtensionState = {
   current: AnalysisRecord | null;
   error: string | null;
   history: AnalysisRecord[];
+  selectedRecordId: string | null;
 };
-export const initialExtensionState: ExtensionState = { session: null, connection: null, activeTabId: null, status: 'idle', product: null, current: null, error: null, history: [] };
+export const initialExtensionState: ExtensionState = { session: null, connection: null, activeTabId: null, status: 'idle', product: null, current: null, error: null, history: [], selectedRecordId: null };
 export const ChatRequestSchema = z.object({ messages: z.array(ChatTurnSchema).min(1).max(40), preferences: PreferencesSchema, currentCriteria: z.array(CriterionSchema).max(MAX_CRITERIA) });
 export const AnalyzeRequestSchema = z.object({ session: ShoppingSessionSchema, product: ProductSnapshotSchema });
 export type ChatRequest = z.infer<typeof ChatRequestSchema>;

@@ -12,8 +12,7 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "types": ["node", "chrome", "vite/client"],
-    "baseUrl": ".",
-    "paths": { "@fits/core": ["packages/core/src/index.ts"], "@fits/ui": ["packages/ui/index.tsx"] }
+    "paths": { "@fits/core": ["./packages/core/src/index.ts"], "@fits/ui": ["./packages/ui/index.tsx"] }
   },
   "include": ["apps/**/*.ts", "apps/**/*.tsx", "packages/**/*.ts", "packages/**/*.tsx", "tests/**/*.ts", "*.config.ts"]
 }

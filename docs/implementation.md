@@ -1,13 +1,30 @@
-# Implementation checkpoint
+# Implementation
 
-User requested the actual local web service and Chrome extension after the Figma mockups, including a page of previously compared products. They chose OpenAI API and local execution (no deployment). Keep all product UI in English and USD examples, fits deep green, minimal chat, inline marketplace buttons, in-chat extension install instructions.
+## Runtime
 
-Architecture: root TypeScript project, React/Vite web (localhost:5173), Hono/Node API (localhost:4317), Chrome MV3 side panel. Shared contracts and conservative score computation in packages/core. OpenAI Responses structured outputs are server-only, store:false; default model gpt-4.1-mini, configurable. API key is not present in the environment and must be provided in root .env; never expose it to frontend/extension. Test provider is explicitly gated by NODE_ENV=test and FITS_TEST_MODE=1, never a production fallback.
+- React/Vite website: http://localhost:5173.
+- Hono/Node API: http://localhost:4317, bound to loopback.
+- Chrome Manifest V3 extension: service worker, app bridge, marketplace capture, side panel and local comparison history.
+- OpenAI Responses structured outputs, server-side key, configurable model, `store: false`.
 
-Runtime flow: web chat returns max four typed criteria → bridge detects extension → inline store click pairs session + local API capability token → extension opens side panel and selected marketplace → content script extracts actual Product JSON-LD, relevant DOM text and visible metadata → server checks evidence, returns grounded findings → deterministic matched/total percentage → browser-local deduplicated compared history with original URLs and criteria snapshots.
+## Shopping flow
 
-Implemented so far: package/tooling, core schemas/store URLs/scoring/history, API/provider, extraction, extension bridge/service worker/storage/build script. Remaining: React web UI, side panel + history UI, tests/fixtures, build/typecheck fixes, browser E2E with unpacked Chromium extension and controlled marketplace network fixtures, README and final verified running local handoff.
+An English conversation produces up to four criteria, always including product price. Each criterion has a Mandatory or Optional priority that the user can change in chat. Inline marketplace buttons pass the shopping session to the extension and open the selected store. Missing-extension setup stays in the conversation and preserves the pending store across refresh.
 
-Design source: design/figma-state.json latestRevision, chat frame 32:218, result frame 19:2, local sources design/build_mockup.py + design/chat_html.py. Figma chat code context was retrieved and screenshot viewed; SVGs downloaded to packages/ui/assets, fonts copied to packages/ui/fonts. Use these exact static assets where applicable. No history Figma frame was created before the user switched to implementation; implement the feature in the actual extension.
+The content script extracts current product metadata and visible product text. The displayed variant price takes precedence over structured metadata. The API validates evidence quotes, recomputes numeric thresholds and product-price checks, and returns results to the panel. Unknown information stays unknown.
 
-References used: https://developers.openai.com/api/docs/guides/structured-outputs ; https://developers.openai.com/api/docs/models/gpt-4.1-mini ; https://developer.chrome.com/docs/extensions/reference/api/sidePanel ; https://playwright.dev/docs/chrome-extensions .
+## Fit policy
+
+Mandatory criteria have weight 2 and Optional criteria weight 1. The percentage is matched weight divided by total weight. A failed mandatory criterion marks the product not a fit; an unverified mandatory criterion requires checking. Shipping and taxes do not contribute to product fit. Currencies are not converted without evidence.
+
+Compared results include the product URL, variant, evidence, criteria snapshot and scoring method. Repeat checks for the same product/variant/criteria update one record; changed criteria remain separate. Older records are retained with their original scores and marked as using an earlier method. Current-item analysis clears on unsupported tabs/navigation while history remains available.
+
+## Local data and boundaries
+
+Conversations are saved in website local storage. Up to 100 comparisons are saved in Chrome local storage, restricted to trusted extension contexts. The web and extension communicate through a configured-origin bridge; model requests require a short-lived local pairing token. The OpenAI key never enters the client build. The server validates origins, bodies, supported marketplace hosts and unique criteria, with rate limiting.
+
+This version runs locally. Accounts, cloud sync, hosted deployment, Chrome Web Store publication, checkout automation and purchasing are not implemented.
+
+## Validation
+
+See `docs/verification.md` for the completed checks and `README.md` for installation and commands. Controlled storefronts and the deterministic test provider are isolated to the test workflow. Live OpenAI verification is separate.

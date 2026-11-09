@@ -3,17 +3,17 @@ import { randomBytes } from 'node:crypto';
 import { serve } from '@hono/node-server';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { createApi } from './app';
-import { OpenAiProvider } from './provider';
+import { OpenAiProvider, type AiProvider } from './provider';
 
 const port=Number(process.env.API_PORT||4317);
 const webOrigin=process.env.WEB_ORIGIN||'http://localhost:5173';
 const model=process.env.OPENAI_MODEL||'gpt-4.1-mini';
-let provider=new OpenAiProvider(process.env.OPENAI_API_KEY,model);
+let provider:AiProvider=new OpenAiProvider(process.env.OPENAI_API_KEY,model);
 let configured=Boolean(process.env.OPENAI_API_KEY?.trim());
 // Only the dedicated test process can load the deterministic fixture provider.
 if(process.env.NODE_ENV==='test'&&process.env.FITS_TEST_MODE==='1') {
   const { FixtureProvider }=await import('../../../tests/fixtures/provider');
-  provider=new FixtureProvider() as unknown as OpenAiProvider;configured=true;
+  provider=new FixtureProvider();configured=true;
 }
 const app=createApi({provider,token:randomBytes(32).toString('hex'),webOrigins:[webOrigin,webOrigin.replace('localhost','127.0.0.1')],apiOrigin:`http://localhost:${port}`,configured,model,extensionStoreUrl:process.env.EXTENSION_STORE_URL});
 app.use('*',serveStatic({root:'./dist/web'}));

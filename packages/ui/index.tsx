@@ -13,3 +13,4 @@ import chevron from './assets/panel-imgIcon5.svg';
 import panelExternal from './assets/panel-imgIcon6.svg';
 export const assets={logo,panelLogo,edit,send,external,assistant,check,panelClose,panelEdit,info,panelCheck,chevron,panelExternal};
 export function Brand({panel=false}:{panel?:boolean}) {return <span className={`brand ${panel?'brand-panel':''}`}><img src={panel?panelLogo:logo} alt=""/>fits</span>;}
+export * from './components';

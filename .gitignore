@@ -7,5 +7,6 @@ apps/web/public/extension/
 playwright-report/
 test-results/
 .cache/
+artifacts/
 *.log
 .DS_Store

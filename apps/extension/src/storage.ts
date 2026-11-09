@@ -1,12 +1,13 @@
-import { AnalysisRecordSchema, ShoppingSessionSchema, initialExtensionState, type ExtensionState } from '@fits/core';
+import { storedAnalysis,storedSession,initialExtensionState, type ExtensionState } from '@fits/core';
 export const STATE_KEY='fits.state.v1';
 export async function readState():Promise<ExtensionState> {
   const raw=(await chrome.storage.local.get(STATE_KEY))[STATE_KEY] as Partial<ExtensionState>|undefined;
   if(!raw)return structuredClone(initialExtensionState);
-  const session=ShoppingSessionSchema.safeParse(raw.session);
-  const history=Array.isArray(raw.history)?raw.history.flatMap(r=>{const v=AnalysisRecordSchema.safeParse(r);return v.success?[v.data]:[]}).slice(0,100):[];
-  const current=AnalysisRecordSchema.safeParse(raw.current);
-  return {...initialExtensionState,...raw,session:session.success?session.data:null,history,current:current.success?current.data:null};
+  const session=storedSession(raw.session);
+  const history=Array.isArray(raw.history)?raw.history.flatMap(r=>{const v=storedAnalysis(r);return v?[v]:[]}).slice(0,100):[];
+  const current=storedAnalysis(raw.current);
+  const currentResult=current?.scoringMethod==='priority-v2'?current:null;
+  return {...initialExtensionState,...raw,session,history,current:currentResult,status:raw.status==='ready'&&!currentResult?(session?'waiting':'idle'):raw.status||'idle'};
 }
 let queue:Promise<unknown>=Promise.resolve();
 export function updateState(change:(state:ExtensionState)=>ExtensionState|Promise<ExtensionState>):Promise<ExtensionState> {

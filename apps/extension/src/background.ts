@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AnalysisRecordSchema, ProductSnapshotSchema, ShoppingSessionSchema, StoreIdSchema, criteriaKey, identifyStore, stableHash, storeSearchUrl, upsertHistory, type ProductSnapshot, type ExtensionState } from '@fits/core';
+import { AnalysisRecordSchema, ProductSnapshotSchema, ShoppingSessionSchema, StoreIdSchema, criteriaKey, storedSession, identifyStore, stableHash, storeSearchUrl, upsertHistory, type ProductSnapshot, type ExtensionState } from '@fits/core';
 import { readState, updateState } from './storage';
 
 const appOrigins=new Set([__FITS_APP_ORIGIN__,__FITS_APP_ORIGIN__.replace('localhost','127.0.0.1')]);
@@ -26,7 +26,7 @@ async function startShopping(payload:unknown,sender:chrome.runtime.MessageSender
 async function analyze(product:ProductSnapshot,tabId:number,force=false):Promise<void> {
   const state=await readState();if(!state.session||!state.connection)return;
   const key=criteriaKey(state.session);
-  const cached=state.history.find(r=>r.session.id===state.session!.id&&r.criteriaKey===key&&r.product.canonicalUrl===product.canonicalUrl&&r.product.variant===product.variant&&fingerprint(r.product)===fingerprint(product)&&Date.now()-r.checkedAt<30*60_000);
+  const cached=state.history.find(r=>r.scoringMethod==='priority-v2'&&r.session.id===state.session!.id&&r.criteriaKey===key&&r.product.canonicalUrl===product.canonicalUrl&&r.product.variant===product.variant&&fingerprint(r.product)===fingerprint(product)&&Date.now()-r.checkedAt<30*60_000);
   if(cached&&!force){await updateState(s=>({...s,activeTabId:tabId,status:'ready',product,current:cached,error:null}));return;}
   if(!force&&state.status==='analyzing'&&state.activeTabId===tabId&&state.product&&fingerprint(state.product)===fingerprint(product))return;
   pending.get(tabId)?.abort();const controller=new AbortController();pending.set(tabId,controller);
@@ -64,15 +64,31 @@ async function panelAction(type:string,payload:unknown):Promise<unknown> {
     return{ok:true};
   }
   if(type==='OPEN_CHAT'){const tab=await chrome.tabs.create({url:__FITS_APP_ORIGIN__});return{ok:true,tabId:tab.id};}
+  if(type==='FOCUS_PRODUCT'){
+    const state=await readState();
+    if(state.activeTabId){const tab=await chrome.tabs.update(state.activeTabId,{active:true});if(!tab)throw new Error('This product tab has closed.');await chrome.windows.update(tab.windowId,{focused:true});return{ok:true};}
+    if(state.current&&identifyStore(state.current.product.url)){await chrome.tabs.create({url:state.current.product.url});return{ok:true};}
+    throw new Error('Open a product page to continue.');
+  }
   if(type==='HISTORY_REMOVE'){
     const {id}=z.object({id:z.string()}).parse(payload);await updateState(s=>({...s,history:s.history.filter(r=>r.id!==id)}));return{ok:true};
   }
   if(type==='OPEN_PRODUCT'){
     const {id}=z.object({id:z.string()}).parse(payload);const state=await readState();const record=state.history.find(r=>r.id===id);if(!record||!identifyStore(record.product.url))throw new Error('This saved product is no longer available.');
-    await updateState(s=>({...s,session:record.session,status:'waiting',current:null,product:null,error:null}));
+    await updateState(s=>({...s,session:storedSession(record.session),status:'waiting',current:null,product:null,error:null}));
     const tab=await chrome.tabs.create({url:record.product.url});await updateState(s=>({...s,activeTabId:tab.id??null}));return{ok:true};
   }
   if(type==='CLEAR_CURRENT_ERROR'){await updateState(s=>({...s,error:null}));return{ok:true};}
+  if(type==='SELECT_PRODUCT'){
+    const {id}=z.object({id:z.string()}).parse(payload);const state=await readState();
+    const record=state.history.find(r=>r.id===id);
+    if(!record||!state.session||criteriaKey(record.session)!==criteriaKey(state.session))throw new Error('Choose a product checked against your current criteria.');
+    await updateState(s=>({...s,selectedRecordId:id,current:record,product:record.product,status:'ready',error:null}));
+    const tab=state.activeTabId?await chrome.tabs.get(state.activeTabId).catch(()=>null):null;
+    if(tab?.id)await chrome.tabs.update(tab.id,{url:record.product.url,active:true});
+    else await chrome.tabs.create({url:record.product.url,active:true});
+    return{ok:true};
+  }
   throw new Error('Unknown action.');
 }
 chrome.runtime.onMessage.addListener((message:unknown,sender,sendResponse)=>{
@@ -90,5 +106,18 @@ chrome.runtime.onMessage.addListener((message:unknown,sender,sendResponse)=>{
   work.then(sendResponse,error=>sendResponse({ok:false,error:error instanceof Error?error.message:'Request failed.'}));
   return true;
 });
-chrome.tabs.onActivated.addListener(({tabId})=>{void chrome.tabs.get(tabId).then(tab=>{if(tab.url&&identifyStore(tab.url))return chrome.tabs.sendMessage(tabId,{type:'FITS_CAPTURE_NOW'});}).catch(()=>undefined);});
+async function followTab(tabId:number,requestCapture:boolean):Promise<void>{
+  const tab=await chrome.tabs.get(tabId);if(!tab.active)return;
+  // Extension UI tabs are only another view of the current storefront, not a product page.
+  if(tab.url?.startsWith(chrome.runtime.getURL('')))return;
+  for(const controller of pending.values())controller.abort();pending.clear();
+  await updateState(s=>({...s,activeTabId:tabId,status:s.session?'waiting':'idle',product:null,current:null,error:null}));
+  if(requestCapture&&tab.url&&identifyStore(tab.url))await chrome.tabs.sendMessage(tabId,{type:'FITS_CAPTURE_NOW'}).catch(()=>undefined);
+}
+chrome.tabs.onActivated.addListener(({tabId})=>{void followTab(tabId,true).catch(()=>undefined);});
+chrome.tabs.onUpdated.addListener((tabId,change,tab)=>{
+  if(!tab.active||tab.url?.startsWith(chrome.runtime.getURL('')))return;
+  if(change.url||change.status==='loading')void followTab(tabId,change.status==='complete').catch(()=>undefined);
+  else if(change.status==='complete'&&tab.url&&identifyStore(tab.url))void chrome.tabs.sendMessage(tabId,{type:'FITS_CAPTURE_NOW'}).catch(()=>undefined);
+});
 chrome.tabs.onRemoved.addListener(tabId=>{pending.get(tabId)?.abort();pending.delete(tabId);void updateState(s=>s.activeTabId===tabId?{...s,activeTabId:null,status:s.session?'waiting':'idle',product:null,current:null}:s);});
