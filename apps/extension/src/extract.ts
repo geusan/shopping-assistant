@@ -59,7 +59,11 @@ export function extractProduct(doc:Document,pageUrl:string,now=Date.now()):Produ
   const image=safeProductImage(imageValue||doc.querySelector('meta[property="og:image"]')?.getAttribute('content')||doc.querySelector('#landingImage')?.getAttribute('src'),pageUrl);
   const roots=['#dp','#mainContent','main','[itemtype="https://schema.org/Product"]'];
   const main=roots.map(s=>doc.querySelector(s)).find(Boolean)||doc.body;
-  const body=main?visibleText(main):'';
+  const specificationSelectors=store==='amazon'?['#feature-bullets','#productOverview_feature_div','#productDetails_techSpec_section_1','#productDetails_techSpec_section_2','#productDetails_detailBullets_sections1','#detailBullets_feature_div','#productDescription']:[];
+  const specificationRoots=specificationSelectors.flatMap(selector=>{const node=doc.querySelector(selector);return node?[node]:[];});
+  // Recommendations, ads and delivery widgets change continuously; they are not
+  // evidence about the selected product and must not restart every analysis.
+  const body=specificationRoots.length?specificationRoots.map(visibleText).filter(Boolean).join('\n'):main?visibleText(main):'';
   const description=text(item?.description).slice(0,6000);
   const properties=Array.isArray(item?.additionalProperty)?item.additionalProperty.filter(object).map(p=>`${text(p.name)}: ${text(String(p.value??''))}`).join('\n'):'';
   const variant=firstText(doc,['#variation_color_name .selection','#variation_size_name .selection','[data-testid="selected-variant"]']).slice(0,300);

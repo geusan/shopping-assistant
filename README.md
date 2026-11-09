@@ -38,6 +38,7 @@ After editing extension code, run `pnpm build:extension`, click **Reload** on it
 - OpenAI structured analysis with literal evidence quotes. Unsupported quotes become **Unknown**. Numeric thresholds and listed-product-price comparisons are checked in application code.
 - Weighted product-fit score: Mandatory criteria count twice, Optional criteria once. Missing information is not a match. A failed mandatory criterion marks the product **not a fit**, regardless of percentage; unknown mandatory information requires verification. Shipping and taxes never affect the score. Price uses the listed item price, and currencies are never silently converted.
 - **Compared** view with search, current/all shopping-goal filters, recent/best-match sorting, saved evidence, removal, and reopening original product pages.
+- Unrelated ad/recommendation updates do not restart a check. The same product/variant/price result is cached for up to 30 minutes; **Recheck this product** captures fresh evidence.
 - Repeat checks update the same product/variant/criteria record. Changed criteria preserve a separate snapshot. Up to 100 results are stored in the browser.
 
 ## Commands

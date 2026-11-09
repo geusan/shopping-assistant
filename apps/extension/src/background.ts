@@ -7,7 +7,7 @@ const pairSchema=z.object({session:ShoppingSessionSchema,store:StoreIdSchema,con
 const pending=new Map<number,AbortController>();
 function isAppSender(sender:chrome.runtime.MessageSender):boolean {try{return Boolean(sender.tab&&sender.url&&appOrigins.has(new URL(sender.url).origin));}catch{return false;}}
 function isPanelSender(sender:chrome.runtime.MessageSender):boolean {return Boolean(sender.url?.startsWith(chrome.runtime.getURL('sidepanel.html')));}
-function fingerprint(p:ProductSnapshot):string{return stableHash(`${p.canonicalUrl}|${p.variant}|${p.evidence}`);}
+function fingerprint(p:ProductSnapshot):string{return stableHash(JSON.stringify([p.canonicalUrl,p.variant,p.title,p.price]));}
 async function configure(){await chrome.sidePanel.setPanelBehavior({openPanelOnActionClick:true});await chrome.storage.local.setAccessLevel({accessLevel:'TRUSTED_CONTEXTS'});}
 chrome.runtime.onInstalled.addListener(()=>{void configure();void injectOpenAppTabs();});
 chrome.runtime.onStartup.addListener(()=>{void configure();});
@@ -28,7 +28,7 @@ async function analyze(product:ProductSnapshot,tabId:number,force=false):Promise
   const key=criteriaKey(state.session);
   const cached=state.history.find(r=>r.scoringMethod==='priority-v2'&&r.session.id===state.session!.id&&r.criteriaKey===key&&r.product.canonicalUrl===product.canonicalUrl&&r.product.variant===product.variant&&fingerprint(r.product)===fingerprint(product)&&Date.now()-r.checkedAt<30*60_000);
   if(cached&&!force){await updateState(s=>({...s,activeTabId:tabId,status:'ready',product,current:cached,error:null}));return;}
-  if(!force&&state.status==='analyzing'&&state.activeTabId===tabId&&state.product&&fingerprint(state.product)===fingerprint(product))return;
+  if(!force&&pending.has(tabId)&&state.status==='analyzing'&&state.activeTabId===tabId&&state.product&&fingerprint(state.product)===fingerprint(product))return;
   pending.get(tabId)?.abort();const controller=new AbortController();pending.set(tabId,controller);
   await updateState(s=>({...s,activeTabId:tabId,status:'analyzing',product,current:null,error:null}));
   const timer=setTimeout(()=>controller.abort(),40_000);
@@ -50,17 +50,17 @@ async function analyze(product:ProductSnapshot,tabId:number,force=false):Promise
 async function capture(payload:unknown,sender:chrome.runtime.MessageSender):Promise<{ok:true}> {
   if(!sender.tab?.id||!sender.url||!identifyStore(sender.url))throw new Error('Unsupported page.');
   const tab=await chrome.tabs.get(sender.tab.id);if(!tab.active)return{ok:true};
-  const data=z.object({url:z.string().url(),product:ProductSnapshotSchema.nullable()}).parse(payload);
+  const data=z.object({url:z.string().url(),product:ProductSnapshotSchema.nullable(),force:z.boolean().optional()}).parse(payload);
   if(new URL(data.url).origin!==new URL(sender.url).origin)throw new Error('Page origin mismatch.');
   const state=await readState();if(!state.session)return{ok:true};
   if(!data.product){pending.get(tab.id!)?.abort();pending.delete(tab.id!);await updateState(s=>({...s,activeTabId:tab.id!,status:'waiting',product:null,current:null,error:null}));return{ok:true};}
   if(new URL(data.product.url).origin!==new URL(sender.url).origin||identifyStore(data.product.url)!==data.product.store)throw new Error('Product origin mismatch.');
-  void analyze(data.product,tab.id!);return{ok:true};
+  void analyze(data.product,tab.id!,data.force===true);return{ok:true};
 }
 async function panelAction(type:string,payload:unknown):Promise<unknown> {
   if(type==='STATE_GET')return{ok:true,state:await readState()};
   if(type==='ANALYZE_AGAIN'){
-    const state=await readState();if(state.activeTabId){await chrome.tabs.sendMessage(state.activeTabId,{type:'FITS_CAPTURE_NOW',force:true}).catch(()=>undefined);if(state.product)void analyze(state.product,state.activeTabId,true);}
+    const state=await readState();if(state.activeTabId)await chrome.tabs.sendMessage(state.activeTabId,{type:'FITS_CAPTURE_NOW',force:true});
     return{ok:true};
   }
   if(type==='OPEN_CHAT'){const tab=await chrome.tabs.create({url:__FITS_APP_ORIGIN__});return{ok:true,tabId:tab.id};}
