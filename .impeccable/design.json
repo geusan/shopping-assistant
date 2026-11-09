@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-09T04:49:22.223028+00:00",
+  "title": "Design System: fits",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "딥그린",
+        "tonalRamp": [
+          "oklch(15% 0.0206 164.39)",
+          "oklch(25% 0.0343 164.39)",
+          "oklch(36% 0.0493 164.39)",
+          "oklch(48% 0.0658 164.39)",
+          "oklch(60% 0.0685 164.39)",
+          "oklch(72% 0.0685 164.39)",
+          "oklch(84% 0.0685 164.39)",
+          "oklch(95% 0.0228 164.39)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "작업 배경",
+        "tonalRamp": [
+          "oklch(15% 0.0008 128.49)",
+          "oklch(25% 0.0014 128.49)",
+          "oklch(36% 0.0020 128.49)",
+          "oklch(48% 0.0027 128.49)",
+          "oklch(60% 0.0028 128.49)",
+          "oklch(72% 0.0028 128.49)",
+          "oklch(84% 0.0028 128.49)",
+          "oklch(95% 0.0009 128.49)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "흰 작업면",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.00)",
+          "oklch(25% 0.0000 0.00)",
+          "oklch(36% 0.0000 0.00)",
+          "oklch(48% 0.0000 0.00)",
+          "oklch(60% 0.0000 0.00)",
+          "oklch(72% 0.0000 0.00)",
+          "oklch(84% 0.0000 0.00)",
+          "oklch(95% 0.0000 0.00)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "본문 잉크",
+        "tonalRamp": [
+          "oklch(15% 0.0088 169.90)",
+          "oklch(25% 0.0146 169.90)",
+          "oklch(36% 0.0211 169.90)",
+          "oklch(48% 0.0281 169.90)",
+          "oklch(60% 0.0293 169.90)",
+          "oklch(72% 0.0293 169.90)",
+          "oklch(84% 0.0293 169.90)",
+          "oklch(95% 0.0098 169.90)"
+        ]
+      },
+      "body-muted": {
+        "role": "neutral",
+        "displayName": "보조 본문",
+        "tonalRamp": [
+          "oklch(15% 0.0068 159.20)",
+          "oklch(25% 0.0114 159.20)",
+          "oklch(36% 0.0164 159.20)",
+          "oklch(48% 0.0219 159.20)",
+          "oklch(60% 0.0228 159.20)",
+          "oklch(72% 0.0228 159.20)",
+          "oklch(84% 0.0228 159.20)",
+          "oklch(95% 0.0076 159.20)"
+        ]
+      },
+      "summary-surface": {
+        "role": "neutral",
+        "displayName": "구매 의도 요약면",
+        "tonalRamp": [
+          "oklch(15% 0.0034 141.26)",
+          "oklch(25% 0.0056 141.26)",
+          "oklch(36% 0.0081 141.26)",
+          "oklch(48% 0.0108 141.26)",
+          "oklch(60% 0.0113 141.26)",
+          "oklch(72% 0.0113 141.26)",
+          "oklch(84% 0.0113 141.26)",
+          "oklch(95% 0.0038 141.26)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "일반 경계",
+        "tonalRamp": [
+          "oklch(15% 0.0036 145.48)",
+          "oklch(25% 0.0060 145.48)",
+          "oklch(36% 0.0087 145.48)",
+          "oklch(48% 0.0115 145.48)",
+          "oklch(60% 0.0120 145.48)",
+          "oklch(72% 0.0120 145.48)",
+          "oklch(84% 0.0120 145.48)",
+          "oklch(95% 0.0040 145.48)"
+        ]
+      },
+      "panel-border": {
+        "role": "neutral",
+        "displayName": "패널 경계",
+        "tonalRamp": [
+          "oklch(15% 0.0057 145.41)",
+          "oklch(25% 0.0095 145.41)",
+          "oklch(36% 0.0137 145.41)",
+          "oklch(48% 0.0183 145.41)",
+          "oklch(60% 0.0190 145.41)",
+          "oklch(72% 0.0190 145.41)",
+          "oklch(84% 0.0190 145.41)",
+          "oklch(95% 0.0063 145.41)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "입력 경계",
+        "tonalRamp": [
+          "oklch(15% 0.0256 162.03)",
+          "oklch(25% 0.0426 162.03)",
+          "oklch(36% 0.0614 162.03)",
+          "oklch(48% 0.0818 162.03)",
+          "oklch(60% 0.0852 162.03)",
+          "oklch(72% 0.0852 162.03)",
+          "oklch(84% 0.0852 162.03)",
+          "oklch(95% 0.0284 162.03)"
+        ]
+      },
+      "selected-surface": {
+        "role": "primary",
+        "displayName": "선택면",
+        "tonalRamp": [
+          "oklch(15% 0.0037 137.78)",
+          "oklch(25% 0.0062 137.78)",
+          "oklch(36% 0.0089 137.78)",
+          "oklch(48% 0.0118 137.78)",
+          "oklch(60% 0.0123 137.78)",
+          "oklch(72% 0.0123 137.78)",
+          "oklch(84% 0.0123 137.78)",
+          "oklch(95% 0.0041 137.78)"
+        ]
+      },
+      "selected-border": {
+        "role": "primary",
+        "displayName": "선택 경계",
+        "tonalRamp": [
+          "oklch(15% 0.0245 160.00)",
+          "oklch(25% 0.0409 160.00)",
+          "oklch(36% 0.0589 160.00)",
+          "oklch(48% 0.0785 160.00)",
+          "oklch(60% 0.0817 160.00)",
+          "oklch(72% 0.0817 160.00)",
+          "oklch(84% 0.0817 160.00)",
+          "oklch(95% 0.0272 160.00)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "포커스",
+        "tonalRamp": [
+          "oklch(15% 0.0218 163.80)",
+          "oklch(25% 0.0363 163.80)",
+          "oklch(36% 0.0523 163.80)",
+          "oklch(48% 0.0698 163.80)",
+          "oklch(60% 0.0727 163.80)",
+          "oklch(72% 0.0727 163.80)",
+          "oklch(84% 0.0727 163.80)",
+          "oklch(95% 0.0242 163.80)"
+        ]
+      },
+      "outline-ink": {
+        "role": "neutral",
+        "displayName": "보조 버튼 글자",
+        "tonalRamp": [
+          "oklch(15% 0.0157 160.83)",
+          "oklch(25% 0.0261 160.83)",
+          "oklch(36% 0.0376 160.83)",
+          "oklch(48% 0.0502 160.83)",
+          "oklch(60% 0.0523 160.83)",
+          "oklch(72% 0.0523 160.83)",
+          "oklch(84% 0.0523 160.83)",
+          "oklch(95% 0.0174 160.83)"
+        ]
+      },
+      "outline-border": {
+        "role": "neutral",
+        "displayName": "보조 버튼 경계",
+        "tonalRamp": [
+          "oklch(15% 0.0053 153.52)",
+          "oklch(25% 0.0089 153.52)",
+          "oklch(36% 0.0128 153.52)",
+          "oklch(48% 0.0171 153.52)",
+          "oklch(60% 0.0178 153.52)",
+          "oklch(72% 0.0178 153.52)",
+          "oklch(84% 0.0178 153.52)",
+          "oklch(95% 0.0059 153.52)"
+        ]
+      },
+      "selected-chip-surface": {
+        "role": "primary",
+        "displayName": "선택 칩 면",
+        "tonalRamp": [
+          "oklch(15% 0.0045 151.77)",
+          "oklch(25% 0.0075 151.77)",
+          "oklch(36% 0.0108 151.77)",
+          "oklch(48% 0.0144 151.77)",
+          "oklch(60% 0.0150 151.77)",
+          "oklch(72% 0.0150 151.77)",
+          "oklch(84% 0.0150 151.77)",
+          "oklch(95% 0.0050 151.77)"
+        ]
+      },
+      "selected-chip-ink": {
+        "role": "primary",
+        "displayName": "선택 칩 글자",
+        "tonalRamp": [
+          "oklch(15% 0.0261 161.90)",
+          "oklch(25% 0.0434 161.90)",
+          "oklch(36% 0.0625 161.90)",
+          "oklch(48% 0.0834 161.90)",
+          "oklch(60% 0.0869 161.90)",
+          "oklch(72% 0.0869 161.90)",
+          "oklch(84% 0.0869 161.90)",
+          "oklch(95% 0.0290 161.90)"
+        ]
+      },
+      "success-surface": {
+        "role": "semantic",
+        "displayName": "충족 결과 면",
+        "tonalRamp": [
+          "oklch(15% 0.0052 140.02)",
+          "oklch(25% 0.0087 140.02)",
+          "oklch(36% 0.0125 140.02)",
+          "oklch(48% 0.0167 140.02)",
+          "oklch(60% 0.0174 140.02)",
+          "oklch(72% 0.0174 140.02)",
+          "oklch(84% 0.0174 140.02)",
+          "oklch(95% 0.0058 140.02)"
+        ]
+      },
+      "success-score": {
+        "role": "semantic",
+        "displayName": "충족 점수",
+        "tonalRamp": [
+          "oklch(15% 0.0240 157.84)",
+          "oklch(25% 0.0400 157.84)",
+          "oklch(36% 0.0576 157.84)",
+          "oklch(48% 0.0767 157.84)",
+          "oklch(60% 0.0799 157.84)",
+          "oklch(72% 0.0799 157.84)",
+          "oklch(84% 0.0799 157.84)",
+          "oklch(95% 0.0266 157.84)"
+        ]
+      },
+      "success-segment": {
+        "role": "semantic",
+        "displayName": "충족 구간",
+        "tonalRamp": [
+          "oklch(15% 0.0257 155.19)",
+          "oklch(25% 0.0429 155.19)",
+          "oklch(36% 0.0617 155.19)",
+          "oklch(48% 0.0823 155.19)",
+          "oklch(60% 0.0858 155.19)",
+          "oklch(72% 0.0858 155.19)",
+          "oklch(84% 0.0858 155.19)",
+          "oklch(95% 0.0286 155.19)"
+        ]
+      },
+      "success-icon-surface": {
+        "role": "semantic",
+        "displayName": "충족 아이콘 면",
+        "tonalRamp": [
+          "oklch(15% 0.0066 132.53)",
+          "oklch(25% 0.0110 132.53)",
+          "oklch(36% 0.0159 132.53)",
+          "oklch(48% 0.0211 132.53)",
+          "oklch(60% 0.0220 132.53)",
+          "oklch(72% 0.0220 132.53)",
+          "oklch(84% 0.0220 132.53)",
+          "oklch(95% 0.0073 132.53)"
+        ]
+      },
+      "success-icon": {
+        "role": "semantic",
+        "displayName": "충족 체크",
+        "tonalRamp": [
+          "oklch(15% 0.0278 151.21)",
+          "oklch(25% 0.0463 151.21)",
+          "oklch(36% 0.0667 151.21)",
+          "oklch(48% 0.0889 151.21)",
+          "oklch(60% 0.0927 151.21)",
+          "oklch(72% 0.0927 151.21)",
+          "oklch(84% 0.0927 151.21)",
+          "oklch(95% 0.0309 151.21)"
+        ]
+      },
+      "success-label": {
+        "role": "semantic",
+        "displayName": "충족 라벨",
+        "tonalRamp": [
+          "oklch(15% 0.0259 145.21)",
+          "oklch(25% 0.0431 145.21)",
+          "oklch(36% 0.0621 145.21)",
+          "oklch(48% 0.0828 145.21)",
+          "oklch(60% 0.0863 145.21)",
+          "oklch(72% 0.0863 145.21)",
+          "oklch(84% 0.0863 145.21)",
+          "oklch(95% 0.0288 145.21)"
+        ]
+      },
+      "unknown-surface": {
+        "role": "semantic",
+        "displayName": "확인 필요 결과 면",
+        "tonalRamp": [
+          "oklch(15% 0.0059 87.51)",
+          "oklch(25% 0.0098 87.51)",
+          "oklch(36% 0.0141 87.51)",
+          "oklch(48% 0.0188 87.51)",
+          "oklch(60% 0.0196 87.51)",
+          "oklch(72% 0.0196 87.51)",
+          "oklch(84% 0.0196 87.51)",
+          "oklch(95% 0.0065 87.51)"
+        ]
+      },
+      "unknown-score": {
+        "role": "semantic",
+        "displayName": "확인 필요 점수",
+        "tonalRamp": [
+          "oklch(15% 0.0236 89.56)",
+          "oklch(25% 0.0393 89.56)",
+          "oklch(36% 0.0566 89.56)",
+          "oklch(48% 0.0755 89.56)",
+          "oklch(60% 0.0786 89.56)",
+          "oklch(72% 0.0786 89.56)",
+          "oklch(84% 0.0786 89.56)",
+          "oklch(95% 0.0262 89.56)"
+        ]
+      },
+      "unknown-segment": {
+        "role": "semantic",
+        "displayName": "확인 필요 구간",
+        "tonalRamp": [
+          "oklch(15% 0.0221 92.84)",
+          "oklch(25% 0.0368 92.84)",
+          "oklch(36% 0.0530 92.84)",
+          "oklch(48% 0.0706 92.84)",
+          "oklch(60% 0.0736 92.84)",
+          "oklch(72% 0.0736 92.84)",
+          "oklch(84% 0.0736 92.84)",
+          "oklch(95% 0.0245 92.84)"
+        ]
+      },
+      "unknown-icon-surface": {
+        "role": "semantic",
+        "displayName": "확인 불가 아이콘 면",
+        "tonalRamp": [
+          "oklch(15% 0.0113 86.89)",
+          "oklch(25% 0.0188 86.89)",
+          "oklch(36% 0.0271 86.89)",
+          "oklch(48% 0.0362 86.89)",
+          "oklch(60% 0.0377 86.89)",
+          "oklch(72% 0.0377 86.89)",
+          "oklch(84% 0.0377 86.89)",
+          "oklch(95% 0.0126 86.89)"
+        ]
+      },
+      "unknown-icon": {
+        "role": "semantic",
+        "displayName": "확인 불가 정보 아이콘",
+        "tonalRamp": [
+          "oklch(15% 0.0322 81.95)",
+          "oklch(25% 0.0536 81.95)",
+          "oklch(36% 0.0773 81.95)",
+          "oklch(48% 0.1030 81.95)",
+          "oklch(60% 0.1073 81.95)",
+          "oklch(72% 0.1073 81.95)",
+          "oklch(84% 0.1073 81.95)",
+          "oklch(95% 0.0358 81.95)"
+        ]
+      },
+      "unknown-label": {
+        "role": "semantic",
+        "displayName": "확인 불가 라벨",
+        "tonalRamp": [
+          "oklch(15% 0.0312 81.26)",
+          "oklch(25% 0.0520 81.26)",
+          "oklch(36% 0.0749 81.26)",
+          "oklch(48% 0.0999 81.26)",
+          "oklch(60% 0.1041 81.26)",
+          "oklch(72% 0.1041 81.26)",
+          "oklch(84% 0.1041 81.26)",
+          "oklch(95% 0.0347 81.26)"
+        ]
+      },
+      "unfilled-segment": {
+        "role": "semantic",
+        "displayName": "미확인 구간",
+        "tonalRamp": [
+          "oklch(15% 0.0083 120.56)",
+          "oklch(25% 0.0138 120.56)",
+          "oklch(36% 0.0199 120.56)",
+          "oklch(48% 0.0265 120.56)",
+          "oklch(60% 0.0276 120.56)",
+          "oklch(72% 0.0276 120.56)",
+          "oklch(84% 0.0276 120.56)",
+          "oklch(95% 0.0092 120.56)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "첫 질문",
+        "purpose": "제품 입력 화면의 질문."
+      },
+      "headline": {
+        "displayName": "화면 제목",
+        "purpose": "구매 조건과 플랫폼 선택 화면."
+      },
+      "score": {
+        "displayName": "충족 점수",
+        "purpose": "최종 CSS의 72px 결과 숫자. tabular-nums 사용."
+      },
+      "score-unknown": {
+        "displayName": "확인 필요 점수",
+        "purpose": "최종 CSS의 64px 결과 숫자. tabular-nums 사용."
+      }
+    },
+    "shadows": [
+      {
+        "name": "preview-ticket",
+        "value": "0 16px 40px #193e2b12",
+        "purpose": "상품 사진 위로 겹치는 구매 기준 미리보기."
+      },
+      {
+        "name": "install-modal",
+        "value": "0 24px 80px #0d271e33",
+        "purpose": "설치 안내 모달. 배경 스크림은 #132b2480."
+      }
+    ],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "일반 웹 화면의 핵심 행동. 기존 소스에는 hover 색상 변화가 없으며 버튼 포커스 외곽선만 정의되어 있다.",
+      "html": "<button class=\"ds-primary\"><span>나에게 맞는 조건 찾기</span><svg class=\"ds-primary-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M4 12h16m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-primary{font-family:Pretendard,sans-serif;display:flex;align-items:center;justify-content:center;gap:24px;border:0;border-radius:10px;height:56px;padding:0 24px;font-size:16px;font-weight:600;white-space:nowrap;color:#fff;background:#164e39;cursor:pointer}.ds-primary-icon{width:20px;height:22px;flex-shrink:0}.ds-primary:hover{cursor:pointer}.ds-primary:focus-visible{outline:3px solid #437c63;outline-offset:4px}.ds-primary:disabled{cursor:default}"
+    },
+    {
+      "name": "Panel Button",
+      "kind": "button",
+      "refersTo": "button-panel",
+      "description": "확장 패널의 전체 너비 행동. 마지막 CSS 보정의 47px 높이·14px 글자를 반영한다.",
+      "html": "<button class=\"ds-panel-button\"><span>배송비 확인하기</span><svg class=\"ds-panel-button-icon\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M14 3h7v7m0-7L10 14M11 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-7\"/></svg></button>",
+      "css": ".ds-panel-button{font-family:Pretendard,sans-serif;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:47px;padding:0 24px;border:0;border-radius:8px;font-size:14px;font-weight:600;white-space:nowrap;color:#fff;background:#164e39;cursor:pointer}.ds-panel-button-icon{width:16px;height:22px;flex-shrink:0}.ds-panel-button:hover{cursor:pointer}.ds-panel-button:focus-visible{outline:3px solid #437c63;outline-offset:4px}.ds-panel-button:disabled{cursor:default}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "조건 수정 등 보조 행동. 투명한 면과 얇은 경계선을 사용한다.",
+      "html": "<button class=\"ds-outline\">구매 조건 수정하기</button>",
+      "css": ".ds-outline{font-family:Pretendard,sans-serif;height:46px;width:100%;border:1px solid #cbd7ce;background:transparent;border-radius:9px;font-size:14px;font-weight:600;color:#294d3b;cursor:pointer}.ds-outline:hover{cursor:pointer}.ds-outline:focus-visible{outline:3px solid #437c63;outline-offset:4px}.ds-outline:disabled{cursor:default}"
+    },
+    {
+      "name": "Intent Field",
+      "kind": "input",
+      "refersTo": "input-intent",
+      "description": "제품·목적·예산/배송지를 묶은 정적 입력 표본. 실제 입력 편집과 검증 상태는 구현되지 않았다.",
+      "html": "<div class=\"ds-intent\"><div class=\"ds-intent-title\"><svg class=\"ds-intent-search\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 4 4\"/></svg><span>출퇴근용 무선 헤드폰</span></div><div class=\"ds-intent-description\">지하철에서 음악을 들을 거예요.<br>가볍고, 충전을 자주 하지 않아도 되면 좋겠어요.</div><div class=\"ds-intent-bottom\"><span>예산 20만원</span><span>배송지 대한민국</span></div></div>",
+      "css": ".ds-intent{font-family:Pretendard,sans-serif;color:#182c25;background:#fff;border:1.5px solid #2c7153;border-radius:12px;overflow:hidden}.ds-intent-title{display:flex;gap:12px;align-items:center;padding:20px 20px 16px;font-size:20px;font-weight:600}.ds-intent-search{width:22px;height:22px;color:#51725f;flex-shrink:0}.ds-intent-description{margin:0 20px;padding:15px 0 20px;border-top:1px solid #e4e9e4;color:#68776d;font-size:15px;line-height:1.6}.ds-intent-bottom{background:#f4f7f3;padding:13px 20px;display:flex;justify-content:space-between;color:#536a5b;font-size:13px}"
+    },
+    {
+      "name": "Selected Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "선택한 플랫폼 행의 텍스트 상태 표시. 클릭 대상이 아니다.",
+      "html": "<span class=\"ds-selected-chip\">선택됨</span>",
+      "css": ".ds-selected-chip{font-family:Pretendard,sans-serif;border-radius:6px;display:inline-flex;align-items:center;gap:5px;padding:5px 9px;font-size:12px;line-height:16px;font-weight:600;background:#e7f1e9;color:#1d6648}"
+    },
+    {
+      "name": "Condition Card",
+      "kind": "card",
+      "refersTo": "card-condition",
+      "description": "네 개 구매 조건의 편집 행. 값 표시와 삭제 아이콘은 정적 목업 표현이다.",
+      "html": "<div class=\"ds-condition\"><div class=\"ds-condition-icon\"><svg class=\"ds-condition-symbol\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7 7h10l4 14H3L7 7Z\"/><circle cx=\"12\" cy=\"5\" r=\"3\"/></svg></div><div class=\"ds-condition-copy\"><b>가벼운 무게</b><p>매일 오래 착용해도 편안하게</p></div><div class=\"ds-condition-value\"><span class=\"ds-condition-label\">최대 무게</span><div class=\"ds-condition-field\"><span>250 g</span><svg class=\"ds-condition-down\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m6 9 6 6 6-6\"/></svg></div></div><span class=\"ds-condition-remove\"><svg class=\"ds-condition-close\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m6 6 12 12M18 6 6 18\"/></svg></span></div>",
+      "css": ".ds-condition{font-family:Pretendard,sans-serif;box-sizing:border-box;display:flex;align-items:center;gap:18px;background:#fff;color:#182c25;border:1px solid #dde5dc;border-radius:12px;padding:20px;height:106px}.ds-condition-icon{color:#3c6850;background:#eff4ed;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;flex-shrink:0}.ds-condition-symbol{width:22px;height:22px}.ds-condition-copy{width:260px}.ds-condition-copy b{font-size:17px}.ds-condition-copy p{font-size:13px;color:#667668;margin:6px 0 0}.ds-condition-value{margin-left:auto;width:196px}.ds-condition-label{font-size:11px;color:#6b796e;display:block;margin-bottom:6px}.ds-condition-field{border:1px solid #d5dfd3;border-radius:7px;display:flex;justify-content:space-between;align-items:center;padding:9px 12px;font-size:15px;color:#254a35}.ds-condition-down{width:14px;height:22px}.ds-condition-remove{color:#8a978b;display:flex;margin-left:4px}.ds-condition-close{width:16px;height:22px}"
+    },
+    {
+      "name": "Three-step Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-steps",
+      "description": "완료 체크, 현재 단계 채움, 다음 단계 외곽선의 세 상태를 표시한다. 링크 동작은 정의하지 않는다.",
+      "html": "<nav class=\"ds-steps\" aria-label=\"쇼핑 준비 단계\"><div class=\"ds-step ds-step-done\"><span class=\"ds-step-number\"><svg class=\"ds-step-check\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m5 12 4 4L19 6\"/></svg></span><span>제품 입력</span></div><span class=\"ds-step-line\"></span><div class=\"ds-step ds-step-active\"><span class=\"ds-step-number\">2</span><span>구매 조건</span></div><span class=\"ds-step-line\"></span><div class=\"ds-step\"><span class=\"ds-step-number\">3</span><span>쇼핑몰 선택</span></div></nav>",
+      "css": ".ds-steps{font-family:Pretendard,sans-serif;height:104px;display:flex;align-items:center;justify-content:center;gap:24px}.ds-step{display:flex;align-items:center;gap:10px;color:#68736c;font-size:15px;font-weight:600;white-space:nowrap}.ds-step-number{box-sizing:border-box;width:28px;height:28px;border:1px solid #cdd6cf;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}.ds-step-check{width:16px;height:22px}.ds-step-active{color:#164e39}.ds-step-active .ds-step-number{background:#164e39;color:#fff;border-color:#164e39}.ds-step-done .ds-step-number{background:#e1ede5;color:#164e39;border-color:#e1ede5}.ds-step-line{width:68px;height:1px;background:#dce3dd}"
+    },
+    {
+      "name": "Success Score",
+      "kind": "custom",
+      "refersTo": "score-success",
+      "description": "가상 점수 예시. 미확인 조건은 충족으로 세지 않으며 상태 설명을 함께 표시한다.",
+      "html": "<div class=\"ds-score-success\"><div class=\"ds-score-success-label\">내 조건 적합도</div><div class=\"ds-score-success-number\">100<span>%</span></div><div class=\"ds-score-success-segments\"><i class=\"ds-score-success-segment\"></i><i class=\"ds-score-success-segment\"></i><i class=\"ds-score-success-segment\"></i><i class=\"ds-score-success-segment\"></i></div><h2 class=\"ds-score-success-title\">내 조건에 모두 맞아요</h2><p class=\"ds-score-success-summary\">설정한 조건 4개 중 4개 충족</p></div>",
+      "css": ".ds-score-success{font-family:Pretendard,sans-serif;box-sizing:border-box;width:380px;padding:20px 24px;background:#eaf3e8;color:#1e3828}.ds-score-success-label{font-size:13px;color:#446849}.ds-score-success-number{font-size:72px;font-weight:700;line-height:1;letter-spacing:-3px;color:#1b5739;margin:12px 0 14px;font-variant-numeric:tabular-nums}.ds-score-success-number>span{font-size:35px;letter-spacing:-1px;margin-left:5px;font-weight:400}.ds-score-success-segments{display:flex;gap:6px;margin-bottom:14px}.ds-score-success-segment{height:5px;flex:1;background:#34704c;border-radius:3px}.ds-score-success-unfilled{background:#d9dfcb}.ds-score-success-title{margin:0;font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.4px;color:#1e3828}.ds-score-success-summary{margin:7px 0 0;font-size:12px;line-height:1.4;color:#537155}"
+    },
+    {
+      "name": "Unknown Score",
+      "kind": "custom",
+      "refersTo": "score-unknown",
+      "description": "가상 점수 예시. 미확인 조건은 충족으로 세지 않으며 상태 설명을 함께 표시한다.",
+      "html": "<div class=\"ds-score-unknown\"><div class=\"ds-score-unknown-label\">내 조건 적합도</div><div class=\"ds-score-unknown-number\">75<span>%</span></div><div class=\"ds-score-unknown-segments\"><i class=\"ds-score-unknown-segment\"></i><i class=\"ds-score-unknown-segment\"></i><i class=\"ds-score-unknown-segment\"></i><i class=\"ds-score-unknown-segment ds-score-unknown-unfilled\"></i></div><h2 class=\"ds-score-unknown-title\">한 가지 더 확인해 주세요</h2><p class=\"ds-score-unknown-summary\">3개 충족 · 1개 확인 불가</p></div>",
+      "css": ".ds-score-unknown{font-family:Pretendard,sans-serif;box-sizing:border-box;width:380px;padding:17px 24px;background:#f9f3e5;color:#1e3828}.ds-score-unknown-label{font-size:13px;color:#786a48}.ds-score-unknown-number{font-size:64px;font-weight:700;line-height:1;letter-spacing:-3px;color:#746028;margin:10px 0 12px;font-variant-numeric:tabular-nums}.ds-score-unknown-number>span{font-size:35px;letter-spacing:-1px;margin-left:5px;font-weight:400}.ds-score-unknown-segments{display:flex;gap:6px;margin-bottom:14px}.ds-score-unknown-segment{height:5px;flex:1;background:#8c7c48;border-radius:3px}.ds-score-unknown-unfilled{background:#d9dfcb}.ds-score-unknown-title{margin:0;font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.4px;color:#63542f}.ds-score-unknown-summary{margin:7px 0 0;font-size:12px;line-height:1.4;color:#796b4a}"
+    }
+  ],
+  "narrative": {
+    "northStar": "내 기준은 그대로",
+    "overview": "밝은 중성 바탕, 정돈된 한국어 타이포그래피와 딥그린을 사용한다. 넓은 웹 작업 공간과 좁은 확장 프로그램에서 같은 구매 조건을 알아볼 수 있도록, 조건 이름·수치·상태의 위계를 일관되게 유지한다. 브랜드 표현은 로고와 핵심 행동, 선택 표시의 정확한 배치에 집중한다.\n\n이 문서는 [최종 목업 소스](design/build_mockup.py)의 CSS와 로컬 검토 이미지를 기록한다. HTML은 Figma 전달용 정적 소스이며 프런트엔드 스택은 미정이다. 실제 앱, 쇼핑몰 연동, 설치, 결제 또는 반응형 구현을 정의하지 않는다. 상품·가격·사양·점수는 모두 가상 예시다. [로컬 검토](design/review/finish-review.md)의 판정은 `ship`이며, Figma 가져오기 충실도와 프로토타입 동작은 별도 검증 대상이다.",
+    "keyCharacteristics": [
+      "딥그린 핵심 행동과 옅은 녹색 선택·충족 표시.",
+      "앰버 정보 부족 상태와 근거를 동반한 적합도.",
+      "얇은 경계선, 절제된 곡률, 제한된 그림자.",
+      "구매 조건의 순서와 용어를 유지하는 웹·패널 구성."
+    ],
+    "rules": [
+      {
+        "name": "The Evidence Rule",
+        "body": "색만으로 상태를 전달하지 않는다. 충족에는 체크와 ‘충족’, 정보 부족에는 정보 아이콘과 ‘확인 불가’를 함께 표시한다.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do 구매 조건의 순서·단위·용어를 웹과 확장 패널에서 유지한다.",
+      "Do 적합도에 충족 수, 정보 상태, 관측 근거와 계산 설명을 함께 둔다.",
+      "Do 기존 곡률과 경계선을 유지하고 그림자는 두 가지 관측된 역할에 사용한다.",
+      "Do 목업 데이터와 실제 상품 정보를 명확히 구분한다."
+    ],
+    "donts": [
+      "Don't 확인 불가를 충족으로 표시하거나 정보가 없을 때 점수를 만들어낸다.",
+      "Don't 쇼핑몰 예시의 노란 버튼이나 브랜드 색상을 fits의 핵심 색상으로 확대한다.",
+      "Don't 미구현 hover·입력 검증·모바일·반응형 동작을 완성된 시스템으로 간주한다."
+    ]
+  }
+}

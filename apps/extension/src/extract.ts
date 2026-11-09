@@ -1,0 +1,63 @@
+import { canonicalProductUrl, identifyStore, safeProductImage, type Money, type ProductSnapshot } from '@fits/core';
+
+type Json = Record<string,unknown>;
+function object(v:unknown):v is Json {return typeof v==='object'&&v!==null&&!Array.isArray(v);}
+function text(value:unknown):string {return typeof value==='string'?value.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim():'';}
+function productNodes(value:unknown,depth=0):Json[] {
+  if(depth>8)return[];
+  if(Array.isArray(value))return value.flatMap(v=>productNodes(v,depth+1));
+  if(!object(value))return[];
+  const type=value['@type'];const found=(type==='Product'||Array.isArray(type)&&type.includes('Product'))?[value]:[];
+  return [...found,...Object.entries(value).filter(([k])=>['@graph','mainEntity','itemListElement','item'].includes(k)).flatMap(([,v])=>productNodes(v,depth+1))];
+}
+export function parseAmount(value:unknown):number|null {
+  if(typeof value==='number')return Number.isFinite(value)&&value>=0?value:null;
+  if(typeof value!=='string')return null;
+  let cleaned=value.trim().replace(/[^\d.,-]/g,'');
+  if(!cleaned||cleaned.startsWith('-'))return null;
+  const comma=cleaned.lastIndexOf(','),dot=cleaned.lastIndexOf('.');
+  if(comma>=0&&dot>=0) cleaned=comma>dot?cleaned.replaceAll('.','').replace(',','.'):cleaned.replaceAll(',','');
+  else if(comma>=0)cleaned=/,\d{1,2}$/.test(cleaned)?cleaned.replace(',','.'):cleaned.replaceAll(',','');
+  const number=Number(cleaned);return Number.isFinite(number)&&number>=0?number:null;
+}
+function money(amount:unknown,currency:unknown):Money|null {const n=parseAmount(amount);return n!==null&&typeof currency==='string'&&/^[A-Z]{3}$/.test(currency.toUpperCase())?{amount:n,currency:currency.toUpperCase()}:null;}
+function visibleText(root:Element):string {
+  const clone=root.cloneNode(true) as Element;
+  clone.querySelectorAll('script,style,noscript,header,footer,nav,form,input,textarea,[aria-hidden="true"],[hidden]').forEach(n=>n.remove());
+  return (clone.textContent||'').replace(/\s+/g,' ').trim().slice(0,20000);
+}
+function firstText(doc:Document,selectors:string[]):string {for(const s of selectors){const n=doc.querySelector(s);if(n){const v=(n.textContent||'').trim();if(v)return v.replace(/\s+/g,' ');}}return '';}
+export function extractProduct(doc:Document,pageUrl:string,now=Date.now()):ProductSnapshot|null {
+  const store=identifyStore(pageUrl);if(!store)return null;
+  const candidates:Json[]=[];
+  for(const script of doc.querySelectorAll('script[type="application/ld+json"]')) {try{candidates.push(...productNodes(JSON.parse(script.textContent||'')));}catch{/* Ignore malformed store metadata. */}}
+  // Search result ItemLists are not a product detail page.
+  const path=new URL(pageUrl).pathname;
+  const detailPath=store==='amazon'?/\/(dp|gp\/product)\//.test(path):store==='ebay'?/\/itm\//.test(path):store==='aliexpress'?/\/item\//.test(path):/^\/(?!search\/)[^/]+\/[^/]+\/?/.test(path)&&!new URL(pageUrl).hostname.startsWith('search.');
+  if(!detailPath)return null;
+  const titleDom=firstText(doc,['#productTitle','h1.x-item-title__mainTitle','h1[data-pl="product-title"]','h1','[itemprop="name"]']);
+  const item=candidates.find(p=>text(p.name)&&titleDom.toLowerCase().includes(text(p.name).toLowerCase().slice(0,30)))||candidates[0];
+  const title=(titleDom||text(item?.name)).slice(0,400);if(!title)return null;
+  const offerValue=item?.offers;
+  const offer=Array.isArray(offerValue)?offerValue.find(object):object(offerValue)?offerValue:null;
+  // Aggregate lowPrice is not necessarily the currently selected option.
+  const currency=offer?.priceCurrency||doc.querySelector('meta[property="product:price:currency"]')?.getAttribute('content');
+  let price=money(offer?.price,currency);
+  if(!price)price=money(doc.querySelector('meta[property="product:price:amount"]')?.getAttribute('content'),currency);
+  if(!price){const raw=firstText(doc,['#corePriceDisplay_desktop_feature_div .a-price .a-offscreen','#corePrice_feature_div .a-price .a-offscreen','.x-price-primary [itemprop="price"]','.x-price-primary .ux-textspans']);const iso=String(currency||(/\bUS\s*\$/.test(raw)||new URL(pageUrl).hostname.endsWith('amazon.com')?'USD':/€/.test(raw)?'EUR':/£/.test(raw)?'GBP':''));price=money(raw,iso);}
+  const imageValue=Array.isArray(item?.image)?item.image[0]:object(item?.image)?item.image.url:item?.image;
+  const image=safeProductImage(imageValue||doc.querySelector('meta[property="og:image"]')?.getAttribute('content')||doc.querySelector('#landingImage')?.getAttribute('src'),pageUrl);
+  const roots=['#dp','#mainContent','main','[itemtype="https://schema.org/Product"]'];
+  const main=roots.map(s=>doc.querySelector(s)).find(Boolean)||doc.body;
+  const body=main?visibleText(main):'';
+  const description=text(item?.description).slice(0,6000);
+  const properties=Array.isArray(item?.additionalProperty)?item.additionalProperty.filter(object).map(p=>`${text(p.name)}: ${text(String(p.value??''))}`).join('\n'):'';
+  const variant=firstText(doc,['#variation_color_name .selection','#variation_size_name .selection','[data-testid="selected-variant"]']).slice(0,300);
+  let totalPrice:Money|null=null;
+  // Only an explicitly labelled complete total is trusted; shipping/tax are never assumed zero.
+  const totalText=firstText(doc,['[data-fits-total]','[data-testid="order-total"]','[itemprop="totalPrice"]']);
+  if(totalText && /total|shipping|tax|included/i.test(totalText)) totalPrice=money(totalText,currency||price?.currency);
+  const evidence=[`Product: ${title}`,description,properties,body,price?`Item price: ${price.currency} ${price.amount.toFixed(2)}`:'',totalPrice?`Total: ${totalPrice.currency} ${totalPrice.amount.toFixed(2)}`:'',variant?`Selected variant: ${variant}`:''].filter(Boolean).join('\n').slice(0,28000);
+  if(evidence.length<5)return null;
+  return{url:pageUrl,canonicalUrl:canonicalProductUrl(pageUrl),store,title,image,price,totalPrice,evidence,variant,capturedAt:now};
+}

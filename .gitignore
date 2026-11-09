@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+apps/web/public/extension/
+playwright-report/
+test-results/
+.cache/
+*.log
+.DS_Store
